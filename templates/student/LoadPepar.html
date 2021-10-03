@@ -1,0 +1,155 @@
+{% extends 'student/StudentDashboard.html' %} {% load widget_tweaks %} {% block content1 %}
+<form action="{% url 'student-examsubmit' %}" method="POST">
+    {% csrf_token %}
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <marquee width="100%" direction="left" height="40px">
+                    <font color="red">
+                        <p><i><b>{% for info in notice %}{{info.NoticeForStudentQuestionPeparLoad}}{% endfor %}</b></i>
+                        </p>
+                    </font>
+                </marquee>
+                {% for st in exdetail %}
+                <p style="text-align: left;"> Exam: {{st.Subject}} <span style="float: right;">Date:{{st.Date}}</span> </p>
+                <p style="text-align: left;">Start: {{st.FromTime}} End : {{st.ToTime}}</p>
+                {% endfor %} {% for dur in loaddum %}
+                <p style="text-align: left;">Duration: {{dur.Duration}} Minutes <span style="float: right;">Total Marks: {{dur.marks}}</span></p>
+                {% endfor %}
+
+            </div>
+            <!--Passing Django Objec to Javascript-->
+            <div class="card-body" id="q-box"></div>
+            {% if code %}
+            <script type="text/javascript">
+                var questionsobj = "{{code}}";
+                console.log(questionsobj.length);
+                let buffer = "";
+                let counter = 0,
+                    i = 0;
+                let arrQue = [];
+                var obj = [];
+                for (i = 1; i < questionsobj.length - 1; i++) {
+                    if (questionsobj[i] == "'") {
+                        continue;
+                    }
+                    if (questionsobj[i] == ',') {
+                        arrQue[counter] = buffer;
+                        counter++;
+                        if (counter == 6) {
+                            counter = 0;
+                            obj.push([arrQue]);
+                            arrQue = [];
+                        }
+                        buffer = ""
+                        continue;
+                    }
+                    buffer += questionsobj[i];
+                }
+                arrQue[counter] = buffer;
+                obj.push([arrQue]);
+                var Q_Counter = 0;
+
+                function next(event) {
+                    if (window.Q_Counter != 0)
+                        validateResp();
+                    if (obj.length == (window.Q_Counter)) {
+                        let htmlTemplate = `
+                            <form action="ShowExamSubmitted" name="AnswerForm" method="POST">
+                                
+                                <input value="${responses}" name="answers" style="display:none" >
+                                <font color="red"><p  style="text-align:center;">Your all answers are successfully stored . Plase click below  to Confirm and Submit Exam.</p></font><br>
+                                <br>
+                                <center>
+                                <button type="submit"  class="btn btn-success btn-xs" onclick="next(this)" name="previous" id="myButton" style="border-radius: 0%;">Back To Exam</button>
+                            <button type="submit"  class="btn btn-success btn-xs"  name="submit" id="myButton" style="border-radius: 0%;">Submit Exam</button>
+                            </center>
+                            </form>
+                             `;
+                        document.getElementById("q-box").innerHTML = htmlTemplate;
+                    } else {
+                        arrQue = obj[window.Q_Counter];
+                        console.log("inner", window.Q_Counter);
+                        console.log("inner1", obj.length);
+                        var htmlTemplate = `
+                          <ul style="list-style-type:''">
+                          <div> ${arrQue[0][0]} ${arrQue[0][1]}</div>
+                          <br>
+                          <li>
+                              <input type="radio" name="${arrQue[0][0]}" value="Option1" required> ${arrQue[0][2]}
+                          </li>
+                          <li>
+                              <input type="radio" name="${arrQue[0][0]}" value="Option2" required> ${arrQue[0][3]}
+                          </li>
+                          <li>
+                              <input type="radio" name="${arrQue[0][0]}" value="Option3" required> ${arrQue[0][4]}
+                          </li>
+                          <li>
+                              <input type="radio" name="${arrQue[0][0]}" value="Option4" required> ${arrQue[0][5]}
+                          </li></ul>
+                          <hr>
+                          <div class="card-footer text-right">
+                          <button type="submit"  class="btn btn-success btn-xs" style="border-radius: 0%;" onclick="PreviousQuetion(this)" name="previous"  id="previous">Previous</button>
+                          <button type="submit"  class="btn btn-success btn-xs" style="border-radius: 0%;" onclick="next(this)" name="submit" id="myButton"> Next</button>
+                          </div>`;
+                        window.Q_Counter += 1;
+                        document.getElementById("q-box").innerHTML = htmlTemplate;
+                    }
+                }
+                next(this);
+                var responses = []; // It Will Store All Answers
+                function validateResp() {
+                    let x = document.getElementsByName(arrQue[0][0]);
+                    let ans = 0;
+                    x.forEach((value) => (value.checked == true && (ans = value)));
+                    if (ans == 0) {
+
+                        window.Q_Counter -= 1;
+                        alert("Select Option....!");
+                    } else {
+                        responses.push([arrQue[0][0], ans.value])
+                        console.log(arrQue[0][0], ans.value); //It wiil Print Selected Value
+                        console.log(responses);
+                    }
+                }
+
+                function PreviousQuetion(event) {
+                    window.Q_Counter -= 1;
+                    console.log("previous", window.Q_Counter)
+                    if ((window.Q_Counter) == 0) {
+                        alert("This is End Of Previous Question..!");
+                    } else {
+                        arrQue = obj[window.Q_Counter - 1];
+                        let htmlTemplate = `
+                            <form>
+                            <ul style="list-style-type:''">
+                            <div> ${arrQue[0][0]} ${arrQue[0][1]}</div>
+                            <br>
+                            <li>
+                                <input type="radio" name="${arrQue[0][0]}" value="Option1" required> ${arrQue[0][2]}
+                            </li>
+                            <li>
+                                <input type="radio" name="${arrQue[0][0]}" value="Option2" required> ${arrQue[0][3]}
+                            </li>
+                            <li>
+                                <input type="radio" name="${arrQue[0][0]}" value="Option3" required> ${arrQue[0][4]}
+                            </li>
+                            <li>
+                                <input type="radio" name="${arrQue[0][0]}" value="Option4" required> ${arrQue[0][5]}
+                            </li></ul>
+                            </form>
+                            <div class="card-footer text-right">
+                            <button type="submit"  style="border-radius: 0%;" class="btn btn-success btn-xs" onclick="next(this)" name="submit" id="myButton">Previous</button>
+                            <button type="submit"  style="border-radius: 0%;" class="btn btn-success btn-xs" onclick="next(this)" name="submit" id="myButton">Save And Next</button>
+                            </div>
+                            `;
+                        // window.Q_Counter=window.Q_Counter-1;
+                        document.getElementById("q-box").innerHTML = htmlTemplate;
+                    }
+
+                }
+            </script>
+            {% endif %}
+        </div>
+</form>
+{% endblock content1 %}`

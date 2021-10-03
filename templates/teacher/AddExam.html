@@ -1,0 +1,45 @@
+{% extends 'teacher/TeacherDashboard.html' %} {% load widget_tweaks %} {% block pagecontent %} {%load static%}
+<br>
+<div class="container mt-2">
+    <h5 class="text-center alert alert-info">Upload Exams</h5>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="Subject_code">Subject Code</label> {% render_field form.Subject_code|attr:'required:true' class="form-control" placeholder="Subject Code" %}
+            </div>
+            <div class="form-group col-md-5">
+                <label for="Subject_name">Subject Name</label> {% render_field form.Subject_name|attr:'required:true' class="form-control" placeholder="Subject Name" %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="course">Course</label> {% render_field form.course|attr:'required:true' class="form-control" placeholder="Subject Code" %}
+            </div>
+            <div class="form-group col-md-5">
+                <label for="semester">Semester</label> {% render_field form.semester|attr:'required:true' class="form-control" placeholder="Suject Name" %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="Duration">Duration</label> {% render_field form.Duration|attr:'required:true' class="form-control" placeholder="Duration" %}
+            </div>
+            <div class="form-group col-md-5">
+                <label for="marks">Marks</label> {% render_field form.marks|attr:'required:true' class="form-control" placeholder="Marks" %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="Exammonth">Exam Month</label> {% render_field form.Exammonth|attr:'required:true' class="form-control" placeholder="Month" %}
+            </div>
+            <div class="form-group col-md-5">
+                <label for="Examyear">Exam Year</label> {% render_field form.Examyear|attr:'required:true' class="form-control" placeholder="Year" %}
+            </div>
+        </div>
+
+
+        <input type="submit" value="Upload Exam" class="btn btn-success">
+    </form>
+</div>
+{% endblock pagecontent %}

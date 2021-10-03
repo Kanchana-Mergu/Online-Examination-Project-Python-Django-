@@ -1,0 +1,44 @@
+{% extends 'teacher/TeacherDashboard.html' %} {% load widget_tweaks %} {% block pagecontent %} {%load static%}
+<br>
+<div class="container-fluid">
+    {% if stu %}
+    <div class="card">
+        <div class="card-header">
+            Course Details
+        </div>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for st in stu %}
+                <tr>
+                    <th scope="row">{{st.id}}</th>
+                    <td>{{st.course_name}}</td>
+                    <td>
+                        <a href="{%  url 'teacher-updatecourse' st.id %}" class="btn btn-success btn-xs" style="border-radius: 0%;"><i class="fas fa-user-edit"></i></a></a>
+                        <a href="{%  url 'delcrs' st.id %}" class="btn btn-danger btn-xs" style="border-radius: 0%;"><i class="fas fa-trash-alt"></i></a>
+
+                    </td>
+
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+    <h2 class="text-center alert alert-info">No Data Found</h2>
+
+
+    {% endif %}
+
+
+</div>
+{% endblock pagecontent %}

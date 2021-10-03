@@ -1,0 +1,45 @@
+{% extends 'teacher/TeacherDashboard.html' %} {% block pagecontent %} {% load static %}
+<br>
+<div class="container">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Questionid</th>
+                <th scope="col">Question</th>
+                <th scope="col">Option1</th>
+                <th scope="col">Option2</th>
+                <th scope="col">Option3</th>
+                <th scope="col">Option4</th>
+                <th scope="col">Question Marks</th>
+                <th scope="col">Correct answer</th>
+                <th scope="col">Selected answer</th>
+                <th scope="col" class="table-light">Status</th>
+                <th scope="col">Obtained Marks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x,y in list %}
+            <tr>
+                <td>{{y.question_id}}</td>
+                <td>{{y.question}}</td>
+                <td>{{y.Option1}}</td>
+                <td>{{y.Option2}}</td>
+                <td>{{y.Option3}}</td>
+                <td>{{y.Option4}}</td>
+                <td>{{y.marks}}</td>
+                <td>{{y.answer}}</td>
+                <td>{{x.selectedanswer}}</td>
+                {% if x.Status == "correct" %}
+                <td class="table-light"><i class="fas fa-check"></i></td>
+                {% else %}
+                <td class="table-light"><i class="fas fa-times"></i></td>
+                {% endif %}
+                <td>{{x.obtainedmarks}}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+</div>
+{% endblock pagecontent %}

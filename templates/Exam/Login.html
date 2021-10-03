@@ -1,0 +1,38 @@
+{% extends 'Exam/Home.html' %} {% load widget_tweaks %}
+<!--SignIn Start-->
+{% block content %}
+<div class="form-horizontal">
+    <h3>&ensp;Login</h3>
+    <hr /> {% if form.errors %}
+    <div class="col-md-5">
+        <div class="alert alert-danger alert-dismissible mt-4">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Please enter valid credentials.</strong>
+        </div>
+    </div>
+    {% endif %}
+    <form class="box" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Username</label>
+            <div class="col-md-3">
+                <!--<input class="form-control" id="inputUsername" placeholder="Enter valid username">-->
+                {% render_field form.username class="form-control" autocomplete="off" placeholder="Username" %}
+            </div>
+            <label class="col-md-3 control-label">Password</label>
+            <div class="col-md-3">
+                <!--<input class="form-control" id="inputUsername" placeholder="Enter valid username">-->
+                {% render_field form.password class="form-control" autocomplete="off" placeholder="Password" %}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'password_reset' %}">Forgotten your password ?</a>
+        </div>
+    </form>
+
+</div>
+{% endblock content %}
+<!--SignIn End-->

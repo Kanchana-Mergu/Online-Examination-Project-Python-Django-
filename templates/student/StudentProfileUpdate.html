@@ -1,0 +1,88 @@
+{% extends 'student/StudentDashboard.html' %} {% load widget_tweaks %} {% block content1 %}
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header text-center">Update Your Profile</div>
+
+                <div class="card-body ">
+                    <form method="POST" autocomplete="off" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="SeatNo" class="col-md-4 col-form-label text-md-right">Seat Number</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control " value="{{Sstudent.seat_no}}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="course_name" class="col-md-4 col-form-label text-md-right">Course</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control " value="{{Sstudent.course}}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="semester" class="col-md-4 col-form-label text-md-right">Semester</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control " value="{{Sstudent.semester}}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="username" class="col-md-4 col-form-label text-md-right">UserName</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control " value="{{user.username}}" disabled>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">Change Password</label>
+                            <div class="col-md-6">
+                                {% render_field userForm.password class="form-control" placeholder="Password" %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="first_name" class="col-md-4 col-form-label text-md-right">First Name</label>
+                            <div class="col-md-6">
+                                {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="last_name" class="col-md-4 col-form-label text-md-right">Last Name</label>
+                            <div class="col-md-6">
+                                {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="mobile" class="col-md-4 col-form-label text-md-right">Mobile</label>
+                            <div class="col-md-6">
+                                {% render_field studentForm.mobile_no class="form-control" placeholder="Mobile" %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
+                            <div class="col-md-6">
+                                {% render_field userForm.email class="form-control" placeholder="Email" %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="profile_pic" class="col-md-4 col-form-label text-md-right">Profile Picture</label>
+                            <div class="col-md-6">
+                                {% render_field studentForm.profile_pic class="form-control" placeholder="Profile Picture" %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <input type="submit" value="Update" class="btn btn-primary">
+                                <a type="submit" href="{% url 'student-profile' %}" class="btn btn-primary">Back to Profile</a>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock content1 %}

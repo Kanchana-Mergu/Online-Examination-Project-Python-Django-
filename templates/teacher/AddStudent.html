@@ -1,0 +1,58 @@
+{% extends 'teacher/TeacherDashboard.html' %} {% load widget_tweaks %} {% block pagecontent %} {%load static%}
+<br>
+<div class="container mt-2">
+    <h5 class="text-center alert alert-info">Student Register</h5>
+    <form method="POST" autocomplete="off" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="Seat No">Enter Seat No</label> {% render_field studentForm.seat_no|attr:'required:true' class="form-control" placeholder="Enter Seat No" %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="first_name">First Name</label> {% render_field userForm.first_name|attr:'required:true' class="form-control" placeholder="First Name" %}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="last_name">Last Name</label> {% render_field userForm.last_name|attr:'required:true' class="form-control" placeholder="Last Name" %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="mobile">Contact</label> {% render_field studentForm.mobile_no|attr:'required:true' class="form-control" placeholder="Contact Number" %}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="address">Email</label> {% render_field userForm.email|attr:'required:true' class="form-control" placeholder="Email" %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="username">Username</label> {% render_field userForm.username|attr:'required:true' class="form-control" placeholder="username" %}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Password</label> {% render_field userForm.password|attr:'required:true' class="form-control" placeholder="password" %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="Course">Select Course</label> {% render_field studentForm.course|attr:'required:true' class="form-control" placeholder="Select-Course" %}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Semester">Select Semester</label> {% render_field studentForm.semester|attr:'required:true' class="form-control" placeholder="" %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="profile_pic">Profile Picture</label> {% render_field studentForm.profile_pic|attr:'required:true' class="form-control" placeholder="" %}
+            </div>
+
+        </div>
+        <button type="submit" class="btn btn-primary" style="border-radius:0px;">Allocate Now</button>
+    </form>
+</div>
+<div class="panel panel-primary">
+</div>
+{% endblock pagecontent %}

@@ -1,0 +1,28 @@
+{% extends 'student/StudentDashboard.html' %} {% load static %} {% block content1 %}
+<div class="container">
+    <div class="card text-center">
+        <div class="card-header">
+            <h4> Student Profile</h4>
+        </div>
+        <div class="card-body">
+            {%for r in student %}
+            <img src="{% static r.profile_pic.url %}" alt="Profile Pic" height="60px" width="60px">
+            <h6>Seat Number: {{r.seat_no}}</h6>
+            <h6>Course: {{r.course}}</h6>
+            <h6>Sem : {{r.semester}}</h6>
+            {% endfor %} {% for name in user %}
+            <h5 class="card-title">Name: {{name.first_name}} {{name.last_name}}
+            </h5>
+            <p class="card-text">Email: {{name.email}}</p>
+            {% endfor %} {% for rr in student %}
+            <p class="card-text">Mobile: {{rr.mobile_no}}</p>
+            <a href="{% url 'student-update-profile' rr.id %}" class="btn btn-primary">Update Profile</a> {% endfor %}
+            <a href="{% url 'student-dashboard' %}" class="btn btn-primary">Back</a>
+        </div>
+        <div class="card-footer text-muted">
+            Online Examination
+        </div>
+    </div>
+
+</div>
+{% endblock content1 %}

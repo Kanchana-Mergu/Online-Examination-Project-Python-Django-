@@ -1,0 +1,104 @@
+{% extends 'teacher/TeacherDashboard.html' %} {% load widget_tweaks %}{% load static %} {% block pagecontent %}
+<br>
+<div class="container mt-4">
+    <!--<h1 class="text-center alert alert-info">Add Exam TimeTable</h1>
+    <form action="" method="POST">
+        {% csrf_token %} {{form.as_p}}
+        <input type="submit" value="Add" class="btn btn-success">
+    </form>-->
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-manage-tab" data-toggle="pill" href="#pills-manage" role="tab" aria-controls="pills-manage" aria-selected="true">View TimeTable</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="pills-add-tab" data-toggle="pill" href="#pills-add" role="tab" aria-controls="pills-add" aria-selected="false">Add Time Table</a>
+        </li>
+
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade " id="pills-add" role="tabpanel" aria-labelledby="pills-add-tab">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="Course">Course</label> {% render_field form.course_name|attr:'required:true' class="form-control" %}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Semester">Semester</label> {% render_field form.semester|attr:'required:true' class="form-control" %}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="Subject">Subject</label> {% render_field form.Subject|attr:'required:true' class="form-control" placeholder="Subject" %}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Paper_code">Paper Code</label> {% render_field form.Paper_code|attr:'required:true' class="form-control" placeholder="Paper Code" %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="FromTime">From</label> {% render_field form.FromTime|attr:'required:true' class="form-control" placeholder="From Time" %}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ToTime">To</label> {% render_field form.ToTime|attr:'required:true' class="form-control" placeholder="To Time" %}
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="Date">Date</label> {% render_field form.Date|attr:'required:true' class="form-control" placeholder="Date" %}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Status">Status</label> {% render_field form.Status|attr:'required:true' class="form-control" placeholder="Status" %}
+                    </div>
+                </div>
+
+                <input type="submit" value="Add" class="btn btn-success" style="border-radius:0px;">
+        </div>
+        <div class="tab-pane fade show active" id="pills-manage" role="tabpanel" aria-labelledby="pills-manage-tab">
+            <div class="card">
+                <div class="card-header">
+                    Exam Time Table
+                </div>
+                <table class="table table-hover table-bordered" id="dev-table">
+                    <thead>
+                        <th>Course</th>
+                        <th>Semester</th>
+                        <th>Date</th>
+                        <th>Paper code</th>
+                        <th>Subject</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for timetable in TimeTable %}
+                        <tr>
+                            <td>{{timetable.course_name}}</td>
+                            <td>{{timetable.semester}}</td>
+                            <td>{{timetable.Date}}</td>
+                            <td>{{timetable.Paper_code}}</td>
+                            <td>{{timetable.Subject}}</td>
+                            <td>{{timetable.FromTime}}</td>
+                            <td>{{timetable.ToTime}}</td>
+                            <td>{{timetable.Status}}</td>
+                            <td>
+                                <a href="{% url 'update-timetable' timetable.id %}" class="btn btn-success btn-xs" style="border-radius: 0%;"><i class="fas fa-user-edit"></i></a></a>
+                                <a href="#" class="btn btn-danger btn-xs" style="border-radius: 0%;"><i class="fas fa-trash-alt"></i></a>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+{% endblock pagecontent %}

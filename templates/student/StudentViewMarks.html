@@ -1,0 +1,40 @@
+{% extends 'student/StudentDashboard.html' %} {% block content1 %}
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <b><p style="text-align: left;"> Seat Number: {{Std.seat_no}} <span style="float: right;">Course:{{Std.course}}</span></span></p></b>
+            <b><p style="text-align: left;"> Name: {{request.user.first_name}} {{request.user.last_name}}<span style="float: right;">Semester: {{Std.semester}}</span></p></b>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Subject</th>
+                    <th>Paper Code</th>
+                    <th>Total Marks</th>
+                    <th>Obtained Marks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for marks in studentmarks %}
+                <tr>
+                    <td>{{marks.date}}</td>
+                    <td>{{marks.Subject_name}}</td>
+                    <td>{{marks.papercode}}</td>
+                    <td>{{marks.Totalmarks}}</td>
+                    <td>{{marks.obtainedmarks}}</td>
+                    <td><a href="{% url 'view-exam-marks' Std.id  marks.papercode %}" class="btn btn-success btn-xs" style="border-radius: 0%;"><i class="fas fa-eye"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+{% endblock content1 %}

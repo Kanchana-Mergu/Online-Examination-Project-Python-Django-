@@ -1,0 +1,89 @@
+{% extends 'Exam/AdminDashboard.html' %} {% load widget_tweaks %} {% block pagecontent %} {%load static%}
+<div class="container mt-4">
+    <h3 class="text-center ">Faculty Management</h3>
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-add-tab" data-toggle="pill" href="#pills-add" role="tab" aria-controls="pills-add" aria-selected="true">Add Faculty</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-manage-tab" data-toggle="pill" href="#pills-manage" role="tab" aria-controls="pills-manage" aria-selected="false">Manage Faculty</a>
+        </li>
+
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-add" role="tabpanel" aria-labelledby="pills-add-tab">
+            <form method="POST" autocomplete="off" enctype="multipart/form-data">
+                {% csrf_token %} {{form.as_p}}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="first_name">First Name</label> {% render_field userForm.first_name|attr:'required:true' class="form-control" placeholder="First Name" %}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="last_name">Last Name</label> {% render_field userForm.last_name|attr:'required:true' class="form-control" placeholder="Last Name" %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="mobile">Contact</label> {% render_field teacherForm.mobile|attr:'required:true' class="form-control" placeholder="Contact Number" %}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="address">Email</label> {% render_field userForm.email|attr:'required:true' class="form-control" placeholder="Email" %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="username">Username</label> {% render_field userForm.username|attr:'required:true' class="form-control" placeholder="username" %}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Password</label> {% render_field userForm.password|attr:'required:true' class="form-control" placeholder="password" %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="profile_pic">Profile Picture</label> {% render_field teacherForm.profile_pic|attr:'required:true' class="form-control" placeholder="" %}
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-success" value=" Add Teacher" style="border-radius:0px;">
+                <div>
+                    {% for message in messages %}
+                    <script type="text/javascript">
+                        alert("{{message}}");
+                    </script>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="pills-manage" role="tabpanel" aria-labelledby="pills-manage-tab">
+            <div class="panel panel-primary">
+                <table class="table table-hover table-bordered" id="dev-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Photo</th>
+                            <th>Contact</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    {% for t in teachers %}
+                    <tr>
+
+                        <td> {{t.get_name}}</td>
+                        <td> <img src="{% static t.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+                        <td>{{t.mobile}}</td>
+                        <td><a class="btn btn-success btn-xs" style="border-radius: 0%;" href="#"><i class="fas fa-user-edit"></i></a>
+                            <a class="btn btn-danger btn-xs" style="border-radius: 0%;" href="#"><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock pagecontent %}

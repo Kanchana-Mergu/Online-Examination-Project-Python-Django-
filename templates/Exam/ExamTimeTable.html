@@ -1,0 +1,38 @@
+{% extends 'Exam/AdminDashboard.html' %} {% load widget_tweaks %} {% block pagecontent %} {%load static%}
+<br>
+<div class="container mt-4">
+            <div class="card">
+                <div class="card-header">
+                    Exam Time Table
+                </div>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <th>Course</th>
+                        <th>Semester</th>
+                        <th>Date</th>
+                        <th>Paper code</th>
+                        <th>Subject</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for timetable in TimeTable %}
+                        <tr>
+                            <td>{{timetable.course_name}}</td>
+                            <td>{{timetable.semester}}</td>
+                            <td>{{timetable.Date}}</td>
+                            <td>{{timetable.Paper_code}}</td>
+                            <td>{{timetable.Subject}}</td>
+                            <td>{{timetable.FromTime}}</td>
+                            <td>{{timetable.ToTime}}</td>
+                            <td>{{timetable.Status}}</td>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock pagecontent %}
